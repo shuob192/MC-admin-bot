@@ -16,14 +16,24 @@ FastAPI Agent
 Minecraft Server 
 ```
 
-The agent runs on the same machine as the Minecraft server and communicates via RCON locally. The Discord bot runs on a separate machine and reaches the agent through Tailscale.
+The agent runs on the same machine as the Minecraft server and communicates via RCON locally. The Discord bot runs on a separate machine and reaches the agent over HTTP — via local IP if both machines are on the same LAN, or via Tailscale if they are on different networks.
 
 ## Prerequisites
 
 - Minecraft Java Edition server with RCON enabled
-- [Tailscale](https://tailscale.com/) connecting both machines
 - Python 3.8+ on the server machine, Python 3.10+ recommended on the bot machine
 - A Discord application and bot token
+
+## Networking
+
+The Discord bot communicates with the FastAPI agent over HTTP. How to connect them depends on your setup:
+
+| Setup | How to connect |
+|---|---|
+| Both machines on the same LAN | Set `AGENT_URL` to the agent machine's local IP (e.g. `http://192.168.1.10:8000`) |
+| Machines on different networks | Use [Tailscale](https://tailscale.com/) and set `AGENT_URL` to the agent's Tailscale IP |
+
+If you are running everything at home on the same router, **Tailscale is not required**.
 
 ## Setup
 
